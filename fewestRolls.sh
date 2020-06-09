@@ -3,7 +3,7 @@
 moves=( 'R' 'L' 'U' 'D' 'B' 'F' )
 isDone=0
 setNumber=1
-moves=0
+moveCount=0
 printf "Scramble: "
 read
 while [ $isDone -ne 1 ]; do
@@ -24,7 +24,7 @@ while [ $isDone -ne 1 ]; do
 	printf ": "
 	read
 	input=($REPLY)
-	let moves=moves+${#input[@]}
+	let moveCount=moveCount+${#input[@]}
 	if [ -n ${REPLY[1]} ]; then
 		if [[ $REPLY = "DONE" ]]; then
 			isDone=1
@@ -39,6 +39,6 @@ while [ $isDone -ne 1 ]; do
 done
 
 let setNumber=setNumber-2
-let moves=moves-1
-printf "\nScore: %d\tMoves: %d\n" $setNumber $moves
+let moveCount=moveCount-1
+printf "\nScore: %d\tMoves: %d\n" $setNumber $moveCount
 
