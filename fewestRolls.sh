@@ -19,17 +19,6 @@ while [ $isDone -ne 1 ]; do
 		let count=count+1
 	done
 
-	if [ $pocketSize -lt 12 ]; then
-		if [ $incrementPocket -eq 0 ]; then
-			let incrementPocket=1
-		else	
-			let incrementPocket=0
-			let pocketSize=pocketSize+1
-		fi
-	else
-		let pocketSize=pocketSize+1
-	fi
-
 	IFS=$'\n' sorted=($(sort <<<"${moveSet[*]}"))
 	unset IFS
 	printf "\n%d: " $setNumber
@@ -38,8 +27,38 @@ while [ $isDone -ne 1 ]; do
 	printf ": "
 	read
 	input=($REPLY)
+
+	if [ ${#input[@]} -ne 0 ]; then
+		end=${input[${#input[@]}-1]}
+		if [[ $end = "free" ]]; then
+			echo "2 moves allotted. Solve position not incremented."
+		else
+			if [ $pocketSize -lt 12 ]; then
+				if [ $incrementPocket -eq 0 ]; then
+					let incrementPocket=1
+				else	
+					let incrementPocket=0
+					let pocketSize=pocketSize+1
+				fi
+			else
+				let pocketSize=pocketSize+1
+			fi
+		fi
+	else
+		if [ $pocketSize -lt 12 ]; then
+			if [ $incrementPocket -eq 0 ]; then
+				let incrementPocket=1
+			else	
+				let incrementPocket=0
+				let pocketSize=pocketSize+1
+			fi
+		else
+			let pocketSize=pocketSize+1
+		fi
+	fi
+
 	let moveCount=moveCount+${#input[@]}
-	if [ -n ${REPLY[1]} ]; then
+		if [ -n ${REPLY[1]} ]; then
 		if [[ $REPLY = "DONE" ]]; then
 			isDone=1
 		fi
