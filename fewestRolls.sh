@@ -32,6 +32,7 @@ while [ $isDone -ne 1 ]; do
 		end=${input[${#input[@]}-1]}
 		if [[ $end = "free" ]]; then
 			echo "2 moves allotted. Solve position not incremented."
+			let moveCount=moveCount-1
 		else
 			if [ $pocketSize -lt 12 ]; then
 				if [ $incrementPocket -eq 0 ]; then
